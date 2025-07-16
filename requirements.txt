@@ -1,10 +1,10 @@
 fastapi
-uvicorn
+uvicorn[standard]
 python-multipart
 pydantic
-opencv-python
+opencv-python-headless
 numpy
 supabase
 openai-whisper
 ffmpeg-python
-#gaurika05 -db password
+python-dotenv
