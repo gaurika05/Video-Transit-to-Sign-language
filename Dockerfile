@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     libffi-dev \
+    python3.11-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -20,10 +21,10 @@ COPY requirements.txt .
 # Upgrade pip and install Python dependencies
 RUN pip install --upgrade pip
 
-# Install core dependencies first
+# Install FastAPI without uvicorn[standard] to avoid httptools
 RUN pip install --no-cache-dir \
     fastapi==0.68.2 \
-    uvicorn[standard]==0.15.0 \
+    uvicorn==0.15.0 \
     python-multipart==0.0.5 \
     pydantic==1.10.15
 
