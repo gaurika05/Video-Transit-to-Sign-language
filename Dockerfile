@@ -1,8 +1,11 @@
 FROM python:3.11-slim
 
-# Install system dependencies
+# Install system dependencies and build tools
 RUN apt-get update && apt-get install -y \
     ffmpeg \
+    gcc \
+    python3-dev \
+    build-essential \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
