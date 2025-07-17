@@ -4,8 +4,11 @@ FROM python:3.11-slim
 RUN apt-get update && apt-get install -y \
     ffmpeg \
     gcc \
+    g++ \
     python3-dev \
     build-essential \
+    curl \
+    libffi-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
@@ -14,8 +17,26 @@ WORKDIR /app
 # Copy requirements first to leverage Docker cache
 COPY requirements.txt .
 
-# Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Upgrade pip and install Python dependencies
+RUN pip install --upgrade pip
+
+# Install core dependencies first
+RUN pip install --no-cache-dir \
+    fastapi==0.68.2 \
+    uvicorn[standard]==0.15.0 \
+    python-multipart==0.0.5 \
+    pydantic==1.10.15
+
+# Install remaining dependencies
+RUN pip install --no-cache-dir \
+    opencv-python-headless==4.5.5.64 \
+    numpy==1.22.4 \
+    supabase==0.5.8 \
+    openai-whisper \
+    ffmpeg-python==0.2.0 \
+    python-dotenv==0.19.2 \
+    slowapi==0.1.9 \
+    youtube-transcript-api==0.6.3
 
 # Copy application code
 COPY . .
